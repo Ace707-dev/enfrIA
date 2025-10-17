@@ -8,6 +8,8 @@ import cv2
 import os
 import time
 import re
+import requests
+
 
 def main():
     # Configuración del dispositivo
@@ -22,6 +24,16 @@ def main():
     # Configuración flexible
     MODEL_PATH = os.getenv("MODEL_PATH", "runs/healthy-rotten10/weights/best.pt")
     DATA_DIR = os.getenv("DATA_DIR", "archive/Fruit And Vegetable Diseases Dataset_sorted")
+
+    # Descargar el modelo si no existe en la ruta configurada
+    weights_path = Path(__file__).resolve().parent / MODEL_PATH
+    if not weights_path.exists():
+        print("Downloading pretrained model...")
+        weights_path.parent.mkdir(parents=True, exist_ok=True)
+        url = os.getenv("MODEL_URL", "https://github.com/Ace707-dev/enfrIA/releases/download/TrainedModel/best.pt")
+        resp = requests.get(url, timeout=60)
+        resp.raise_for_status()
+        weights_path.write_bytes(resp.content)
 
     ROOT = Path(__file__).resolve().parent
     DATA_DIR_PATH = ROOT / DATA_DIR
