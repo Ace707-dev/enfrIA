@@ -19,16 +19,20 @@ def main():
         torch.cuda.empty_cache()
         gc.collect()
 
+    # Configuración flexible
+    MODEL_PATH = os.getenv("MODEL_PATH", "runs/healthy-rotten10/weights/best.pt")
+    DATA_DIR = os.getenv("DATA_DIR", "archive/Fruit And Vegetable Diseases Dataset_sorted")
+
     ROOT = Path(__file__).resolve().parent
-    DATA_DIR = ROOT / "archive" / "Fruit And Vegetable Diseases Dataset_sorted"
-    HEALTHY_DIR = DATA_DIR / "healthy"
-    ROTTEN_DIR = DATA_DIR / "rotten"
+    DATA_DIR_PATH = ROOT / DATA_DIR
+    HEALTHY_DIR = DATA_DIR_PATH / "healthy"
+    ROTTEN_DIR = DATA_DIR_PATH / "rotten"
 
     HEALTHY_DIR.mkdir(exist_ok=True, parents=True)
     ROTTEN_DIR.mkdir(exist_ok=True, parents=True)
 
-    # Cargar modelo
-    model = YOLO(ROOT / "runs" / "healthy-rotten10" / "weights" / "best.pt")
+    model = YOLO(ROOT / MODEL_PATH)
+
     if cuda_available:
         model.to("cuda")
 
