@@ -2,6 +2,12 @@
 
 Sistema de clasificación en tiempo real que utiliza YOLO para detectar si frutas y verduras están saludables o podridas a través de la cámara web.
 
+## Integrantes
+  - Josafat Aguirre  
+  - Ruth Manríquez  
+  - Camila Liedo  
+  - Mariana Ortiz
+
 ## Descripción
 
 Este proyecto implementa un clasificador de imágenes basado en deep learning que:
